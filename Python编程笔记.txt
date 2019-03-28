@@ -53,5 +53,12 @@
 
    网上参考说明https://www.cnblogs.com/nancyzhu/p/8551506.html，也可以看Python Docs.
 
-6. 
+6. 问题：使用PyCharm编写Python程序，PyCharm提示“Shadows name from outer scope”
+   解决：根据网上别人的博客https://www.crifan.com/pycharm_python_code_notice_shadows_name_from_outer_scope/ ，该博客总结为“函数内部的变量，如果和函数被调用的外部的变量一样的话，就被PyCharm中叫做shadows name，这样的话，容易引发不容易觉察到的，由于函数内部和外部的变量名一致而引发的一些问题，比如：内部函数名引用时不小心写错了时，就会导致其实调用了外部变量名，从而导致逻辑错乱。所以解决办法是：确保函数内部和外部的变量名不要重复，这样就不会导致可能由此导致的错误了。”，个人经验是，如果用到的变量名可能与Python系统内置的变量或外部模块的变量相同时，可能也会提示这个，所以，确实最好不要重复与外部的变量名，另外，如果不确定引用的某个全局变量是否可能与其它模块的全局变量冲突，则建议，使用时，明确指定是哪个模块中的变量，例如，from datetime import datetime.
+   
+7.问题：Python中如何方便地管理远程服务器，及进行FTP类操作？
+  解决： Python有一个很好的开源库paramiko，网上有博客https://www.cnblogs.com/yangmv/p/5169924.html和https://www.cnblogs.com/pizitai/p/6398632.html也有介绍使用paramiko进行ftp类操作。实际上，paramiko是一个openssh封装Python库，其提供了SSHClient类对ssh的封装和SFTPClient类对ftp的封装，也可以直接在使用SSHClient类的构造函数获得sshclient实例基础上，再通过该实例的tansport(传输)或chnnel(通道)基础上再进行文件传输类操作。
+  
+  
+
 
