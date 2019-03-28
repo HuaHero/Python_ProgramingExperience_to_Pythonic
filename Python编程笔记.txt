@@ -1,0 +1,57 @@
+1. 问题：在Python工程中，创建了一个包，将包里__init__.py改成其它文件名后，在另一个包中，采用from引用时，引用不到；
+
+   解决：每个包下面，需要有__init__.py，主要逻辑可以是放在包下其它命名的文件中，但必须要有init__.py，为什么是这样还待学习和查阅资料。
+
+2. 问题：在Python中采用标准库logging的config.configFile进行日志管理，在日志配置文件中写的对应root日志handler的日志级别是DEBUG,但是采用logging.info时，还是没有输出；
+
+   解决：因为采用的logger是root，但是没有指定root的日志级别，导致root默认采用的warning级别，比DEBUG级别高，导致没有输出，将root的日志级别设置为DEBUG后解决。
+
+3. 问题：Python中如何判断某个文件是否存在；
+
+   解决：通过引入os模块，里面根据程序运行所在OS识别文件路径分隔符（如windows用\，Unix类用/）,os模块还提供os.path.exists()来判断目录或文件是否存在，os.path.isdir()来判断是否是目录，os.path.isfile()来判断是否为文件。
+
+4. 问题:Python中如何读取配置文件并获取里面的值？
+
+   解决：Python提供了ConfigParser模块，其根据配置文件的节和选项，就可以获取到对应配置值。只需要引入ConfigParser模块，通过其构造函数获得对应对象，对应对象read(相应配置文件)即得到了配置文件中的所有配置，通过ConfigParser的sections()获得所有节，根据ConfigParser的get(section, option)获得对应选项的配置值。
+
+5. 问题：Python程序中，如何输出程序运行中的日志到文件，并且可以配置日志的格式？
+
+   解决：输出程序运行日志到文件，Python提供了logging模块，logging模块的模型是将日志记录过程中分为日志记录器logger、日志处理器(日志工具吧，loghandler)和格式器(formatter)等角色。当然，这些也都可以通过配置文件来指定具体值，要读取配置，显然也是要用到上面提到的ConfigParser模块，可以参照下面这个日志配置文件：
+
+   ```ini
+   ;同名应用程序日志输出相关控制信息
+   [loggers]
+   ;声明一个名为administrator的日志记录器,logger
+   keys = root
+   
+   [handlers]
+   ;声明一个名为loghandler的日志处理器（用以表明日志保存到什么地方，以及保存多久）
+   keys = loghandler
+   
+   [formatters]
+   ;声明一个名为generic的formatter(用以配置日志的输出格式)
+   keys = generic
+   
+   [logger_root]
+   ;定义root这个logger所用的handler,root logger必须指定一个级别，否则，默认是WARNING级别
+   level=DEBUG
+   handlers = loghandler
+   
+   [handler_loghandler]
+   ;定义loghandler这个handler输出日志的方式、日志的切换时间等
+   class = handlers.TimedRotatingFileHandler
+   args = ('../OBS_logTransporter.log','midnight',1,10)
+   level = DEBUG
+   formatter = generic
+   
+   [formatter_generic]
+   ;定义generic这个formatter的日志格式，包括日志产生的时间、日志的级别、产生日志的文件名和行号等信息
+   ;如下格式中，name只是logger的name，并不是对应打印日志处的文件名的name
+   ;format = %(asctime)s %(levelname)-5.5s [%(name)s:%(lineno)s] %(message)s
+   format = %(asctime)s %(levelname)-5.5s [%(filename)s:%(lineno)s] %(message)s
+   ```
+
+   网上参考说明https://www.cnblogs.com/nancyzhu/p/8551506.html，也可以看Python Docs.
+
+6. 
+
