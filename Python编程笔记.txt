@@ -58,6 +58,14 @@
    
 7.问题：Python中如何方便地管理远程服务器，及进行FTP类操作？
   解决： Python有一个很好的开源库paramiko，网上有博客https://www.cnblogs.com/yangmv/p/5169924.html和https://www.cnblogs.com/pizitai/p/6398632.html也有介绍使用paramiko进行ftp类操作。实际上，paramiko是一个openssh封装Python库，其提供了SSHClient类对ssh的封装和SFTPClient类对ftp的封装，也可以直接在使用SSHClient类的构造函数获得sshclient实例基础上，再通过该实例的tansport(传输)或chnnel(通道)基础上再进行文件传输类操作。
+8.问题：Python中引入paramikor编程时，PyCharm中提示python paramiko CryptographyDeprecationWarning 
+  解决：【原因】paramiko 2.4.2 依赖 cryptography，而最新的cryptography==2.5里有一些弃用的API。
+        【解决】删掉cryptography 2.5，安装2.4.2，就不会报错了。
+            pip uninstall cryptography==2.5
+            pip install cryptography==2.4.2
+       参考https://yq.aliyun.com/articles/690717 
+       
+9.问题：
   
   
 
