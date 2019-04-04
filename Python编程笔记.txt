@@ -67,7 +67,9 @@
        
 9.问题：Python采用开源库paramiko进行ssh到远程服务器上执行命令后，取到的返回结果stdout,stderr都为空，是什么原因？
   解决：经过调测发现，原来是因为取到的stdout,stderr必须立即readline()或readlines()的结果返回，或者赋值给其它变量，否则，只要ssh关掉，则里面的内容都立马清空了。因为stdin,stdout,stderr都是chanelfile类型（虽然还没有明白这个CHANELFILE是什么类型的文件，但是从命名来看，跟CHANEL相关，既然CHANEL关掉了，CHANEL上的内容自然也就没有了)
-10.问题：
+10.问题：如何利用shell计算通过find查找出来的文件总大小？
+   解决：参照https://blog.51cto.com/204222/2113917,find ./ -name ".txt" -exec ls -lh {} \;| awk 'BEGIN {SUM7=0}{ SUM7+=$5} END {print SUM7}',我的改进后'find \\'/APPlog\\' -mtime -1 -type f -exec du -hsm {} \\;|awk \\'BEGIN {SUM=0}{ SUM+=$1} END {print SUM}\\''。主要是通过find命令与awk结合，注意， 放在Python里调度时，由于awk后的命令，从实测来看，是要用单引号，因此，Python语句中则得用双引号来括起该语句。
+11.
   
   
 
