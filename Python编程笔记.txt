@@ -65,7 +65,9 @@
             pip install cryptography==2.4.2
        参考https://yq.aliyun.com/articles/690717 
        
-9.问题：
+9.问题：Python采用开源库paramiko进行ssh到远程服务器上执行命令后，取到的返回结果stdout,stderr都为空，是什么原因？
+  解决：经过调测发现，原来是因为取到的stdout,stderr必须立即readline()或readlines()的结果返回，或者赋值给其它变量，否则，只要ssh关掉，则里面的内容都立马清空了。因为stdin,stdout,stderr都是chanelfile类型（虽然还没有明白这个CHANELFILE是什么类型的文件，但是从命名来看，跟CHANEL相关，既然CHANEL关掉了，CHANEL上的内容自然也就没有了)
+10.问题：
   
   
 
