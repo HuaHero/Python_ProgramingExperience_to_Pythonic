@@ -69,7 +69,9 @@
   解决：经过调测发现，原来是因为取到的stdout,stderr必须立即readline()或readlines()的结果返回，或者赋值给其它变量，否则，只要ssh关掉，则里面的内容都立马清空了。因为stdin,stdout,stderr都是chanelfile类型（虽然还没有明白这个CHANELFILE是什么类型的文件，但是从命名来看，跟CHANEL相关，既然CHANEL关掉了，CHANEL上的内容自然也就没有了)
 10.问题：如何利用shell计算通过find查找出来的文件总大小？
    解决：参照https://blog.51cto.com/204222/2113917,find ./ -name ".txt" -exec ls -lh {} \;| awk 'BEGIN {SUM7=0}{ SUM7+=$5} END {print SUM7}',我的改进后'find \\'/APPlog\\' -mtime -1 -type f -exec du -hsm {} \\;|awk \\'BEGIN {SUM=0}{ SUM+=$1} END {print SUM}\\''。主要是通过find命令与awk结合，注意， 放在Python里调度时，由于awk后的命令，从实测来看，是要用单引号，因此，Python语句中则得用双引号来括起该语句。
-11.
+11.问题：python出现"No module named "XXX""的解决办法
+   解决：参照https://blog.csdn.net/ouening/article/details/53490847，找到自己的Python安装目录下lib目录里面的site-packages里，在里面建一个命名的.pth文件，然后在里面填写自己的工程的路径，则可以解决。自己实测，用2.7版本，自己建的工程中有多个模块，采用此方法解决了同样的问题。
+
   
   
 
