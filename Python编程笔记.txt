@@ -77,7 +77,17 @@
 12.问题：在Windows下通过pip打包PyCharm写的工程为Python可执行程序，在Windows上可以运行，无法在Linux上运行。
    解决：Windows下通过pip打包的工程，可以看到，他带有winows的一些库，Windows上当然是可以运行的，但Linux上要运行，需要在Linux上通过pip打包。
 
-  
+13.问题：http://www.oicto.com/uninx-find-time-zip/，linux/uninx 查找指定目录指定时间范围内修改过的文件zip/tar打包，其中，通过
+zip -r - `find . -mtime -1 -type f -print` > updatefiles.zip 发现占用的CPU使用率非常高。
+   解决：用另一个find . -mtime -1 -type f -exec zip -r "updatefiles.zip" '{}' \;则CPU使用率要降低一倍。这个是什么原理？还得研究下，但对于像一个到业务服务器上取日志的工具，当然是要选择占用业务服务器CPU使用率低的方法。
+   
+14.问题：centos下安装pip时失败，
+   解决：https://www.cnblogs.com/saolv/p/6963314.html。CentOS安装采用yum -y install pip,如果安装失败，需要先安装扩展源EPEL。
+EPEL(http://fedoraproject.org/wiki/EPEL) 是由 Fedora 社区打造，为 RHEL 及衍生发行版如 CentOS、Scientific Linux 等提供高质量软件包的项目。
+首先安装epel扩展源：
+sudo yum -y install epel-release
+然后再安装pip
+ sudo yum -y install python-pip
   
 
 
